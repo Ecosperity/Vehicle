@@ -31,20 +31,20 @@ class RiderApi {
 
   // final List data = json.decode(File('data.json').readAsStringSync());
 
-  Future<List<Map<String, dynamic>>> database() async {
-    final db = await Db.create('mongodb+srv://eml:Stranger%40mongodb3.5@eml.ioorid4.mongodb.net/eml?retryWrites=true&w=majority');
-    await db.open();
-    final col = db.collection('riders');
-    // print(await col.find().toList());
-    return await col.find().toList();
-  }
+  // Future<List<Map<String, dynamic>>> database() async {
+  //   final db = await Db.create('mongodb+srv://eml:Stranger%40mongodb3.5@eml.ioorid4.mongodb.net/eml?retryWrites=true&w=majority');
+  //   await db.open();
+  //   final col = db.collection('riders');
+  //   // print(await col.find().toList());
+  //   return await col.find().toList();
+  // }
 
   Router get router {
     final router = Router();
 
     router.get('/driver', (Request request) async {
-      var dataMap = await RiderApi().database();
-      return Response.ok(jsonEncode(dataMap));
+      // var dataMap = await RiderApi().database();
+      return Response.ok(jsonEncode(jsonData));
     });
 
     // router.post('/driver', (Request request) {
