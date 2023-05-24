@@ -29,13 +29,22 @@ class RiderApi {
 
   // final List data = json.decode(File('data.json').readAsStringSync());
 
-  Future<List<Map<String, dynamic>>> database() async {
+  Future<Db> database() async {
     final db = await Db.create(
         'mongodb+srv://doadmin:L09xk278KUm156Np@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
     await db.open();
-    final col = db.collection('riders');
-    // print(await col.find().toList());
-    col.insert({'login': 'jdoe', 'name': 'John Doe', 'email': 'john@doe.com'});
+    return db;
+  }
+
+  Future<void> dbInsert(Map<String, String> map) async {
+    Db databases = await database();
+    final col = databases.collection('riders');
+    col.insert(map);
+  }
+
+  Future<List<Map<String, dynamic>>> dbGet() async {
+    Db databases = await database();
+    final col = databases.collection('riders');
     return await col.find().toList();
   }
 
@@ -43,12 +52,14 @@ class RiderApi {
     final router = Router();
 
     router.get('/driver', (Request request) async {
-      var dataMap = await RiderApi().database();
+      var dataMap = await RiderApi().dbGet();
       return Response.ok(jsonEncode(dataMap));
     });
 
-    router.post('/driver', (Request request) {
-      return Response.ok(jsonEncode(Favorite('three', 'four')));
+    router.post('/driver', (Request request) async {
+      final payload = await request.readAsString();
+      dbInsert(json.decode(payload));
+      return Response.ok(payload);
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
