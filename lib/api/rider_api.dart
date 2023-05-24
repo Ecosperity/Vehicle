@@ -5,9 +5,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-
 class RiderApi {
-
   final jsonData = [
     {
       "id": 1,
@@ -32,7 +30,8 @@ class RiderApi {
   // final List data = json.decode(File('data.json').readAsStringSync());
 
   Future<List<Map<String, dynamic>>> database() async {
-    final db = await Db.create('mongodb+srv://doadmin:L09xk278KUm156Np@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
+    final db = await Db.create(
+        'mongodb+srv://doadmin:L09xk278KUm156Np@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
     await db.open();
     final col = db.collection('riders');
     // print(await col.find().toList());
@@ -47,9 +46,9 @@ class RiderApi {
       return Response.ok(jsonEncode(dataMap));
     });
 
-    // router.post('/driver', (Request request) {
-    //   return Response.ok(jsonEncode(Favorite('three', 'four')));
-    // });
+    router.post('/driver', (Request request) {
+      return Response.ok(jsonEncode(Favorite('three', 'four')));
+    });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
     return router;
