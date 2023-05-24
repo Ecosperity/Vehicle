@@ -58,8 +58,8 @@ class RiderApi {
 
     router.post('/driver', (Request request) async {
       final payload = await request.readAsString();
-      Map<String, String> map = json.decode(payload);
-      dbInsert(map);
+      print(payload);
+      dbInsert(json.decode(payload));
       return Response.ok(payload);
     });
 
