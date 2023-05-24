@@ -35,6 +35,7 @@ class RiderApi {
     await db.open();
     final col = db.collection('riders');
     // print(await col.find().toList());
+    col.insert({'login': 'jdoe', 'name': 'John Doe', 'email': 'john@doe.com'});
     return await col.find().toList();
   }
 
