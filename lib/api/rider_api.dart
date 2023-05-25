@@ -47,7 +47,7 @@ class RiderApi {
       // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
       // data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
       dbInsert();
-      return Response.ok(data);
+      return Response.ok(data.toString());
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
