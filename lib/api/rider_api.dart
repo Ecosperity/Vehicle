@@ -11,8 +11,6 @@ class RiderApi {
 
   // final List data = json.decode(File('data.json').readAsStringSync());
 
-  Map<String, String> data = {"login": "", "name": "", "email": ""};
-
   Future<Db> database() async {
     final db = await Db.create(
         'mongodb+srv://doadmin:L09xk278KUm156Np@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
@@ -45,9 +43,9 @@ class RiderApi {
       // final jsonMap = json.decode(payload);
       // print(jsonMap["name"]);
       // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
-      data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
-      dbInsert(data);
-      return Response.ok(data.toString());
+      // data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
+      dbInsert({"login": "doe", "name": "John Doe", "email": "john@doe.com"});
+      return Response.ok("Done");
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
