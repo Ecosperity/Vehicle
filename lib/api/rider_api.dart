@@ -36,10 +36,10 @@ class RiderApi {
     return db;
   }
 
-  Future<void> dbInsert(Map<String, String> map) async {
+  Future<void> dbInsert(List<dynamic> map) async {
     Db databases = await database();
     final col = databases.collection('riders');
-    col.insert(map);
+    col.insert(map as Map<String, dynamic>);
   }
 
   Future<List<Map<String, dynamic>>> dbGet() async {
