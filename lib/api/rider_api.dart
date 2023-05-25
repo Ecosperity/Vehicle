@@ -44,9 +44,7 @@ class RiderApi {
       final payload = await request.readAsString();
       final jsonMap = json.decode(payload);
       print(jsonMap["name"]);
-      data["login"] = jsonMap["login"];
-      data["name"] = jsonMap["name"];
-      data["email"] = jsonMap["email"];
+      data = {"login": jsonMap["login"], "name": jsonMap["name"], "email": jsonMap["email"]};
       dbInsert(data);
       return Response.ok(jsonMap);
     });
