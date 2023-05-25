@@ -6,28 +6,12 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 class RiderApi {
-  final jsonData = [
-    {
-      "id": 1,
-      "first_name": "Seamus",
-      "last_name": "Prinne",
-      "email": "sprinne0@unc.edu",
-      "gender": "Male",
-      "city": "Paris La Défense"
-    },
-    {
-      "id": 2,
-      "first_name": "Allis",
-      "last_name": "Loosemore",
-      "email": "aloosemore1@ca.gov",
-      "gender": "Genderqueer",
-      "city": "Guarujá"
-    },
-  ];
 
   // final favoriteJson = jsonEncode(Favorite('one', 'two'));
 
   // final List data = json.decode(File('data.json').readAsStringSync());
+
+  Map<String, String> data = {"login": "", "name": "", "email": ""};
 
   Future<Db> database() async {
     final db = await Db.create(
@@ -36,7 +20,7 @@ class RiderApi {
     return db;
   }
 
-  Future<void> dbInsert(Map<String, dynamic> map) async {
+  Future<void> dbInsert(Map<String, String> map) async {
     Db databases = await database();
     final col = databases.collection('riders');
     col.insert(map);
@@ -60,7 +44,10 @@ class RiderApi {
       final payload = await request.readAsString();
       final jsonMap = json.decode(payload);
       print(jsonMap["name"]);
-      dbInsert(jsonMap);
+      data["login"] = jsonMap["login"];
+      data["name"] = jsonMap["name"];
+      data["email"] = jsonMap["email"];
+      dbInsert(data);
       return Response.ok(jsonMap);
     });
 
