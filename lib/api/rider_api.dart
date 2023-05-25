@@ -18,10 +18,10 @@ class RiderApi {
     return db;
   }
 
-  Future<void> dbInsert(Map<String, String> data) async {
+  Future<void> dbInsert() async {
     Db databases = await database();
     final col = databases.collection('riders');
-    col.insertOne(data);
+    await col.insertOne({"login": "doe", "name": "John Doe", "email": "john@doe.com"});
   }
 
   Future<List<Map<String, dynamic>>> dbGet() async {
@@ -44,7 +44,7 @@ class RiderApi {
       // print(jsonMap["name"]);
       // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
       // data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
-      await dbInsert({"login": "doe", "name": "John Doe", "email": "john@doe.com"});
+      dbInsert();
       return Response.ok("Done");
     });
 
