@@ -44,7 +44,7 @@ class RiderApi {
       // print(jsonMap["name"]);
       // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
       // data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
-      dbInsert({"login": "doe", "name": "John Doe", "email": "john@doe.com"});
+      await dbInsert({"login": "doe", "name": "John Doe", "email": "john@doe.com"});
       return Response.ok("Done");
     });
 
