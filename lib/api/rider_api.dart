@@ -40,7 +40,7 @@ class RiderApi {
       // final parsedName = int.tryParse(name);
       Db databases = await database();
       final col = databases.collection('riders');
-      await col.deleteOne({"name": name});
+      await col.deleteOne({"login": name});
       return Response.ok("Deleted $name");
     });
 
