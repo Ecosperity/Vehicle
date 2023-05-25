@@ -36,10 +36,10 @@ class RiderApi {
     return db;
   }
 
-  Future<void> dbInsert(List<dynamic> map) async {
+  Future<void> dbInsert(Map<String, dynamic> map) async {
     Db databases = await database();
     final col = databases.collection('riders');
-    col.insert(map as Map<String, dynamic>);
+    col.insert(map);
   }
 
   Future<List<Map<String, dynamic>>> dbGet() async {
@@ -58,10 +58,10 @@ class RiderApi {
 
     router.post('/driver', (Request request) async {
       final payload = await request.readAsString();
-      // Map<String, String> map = json.decode(payload);
-      // print(map);
+      Map<String, dynamic> map = json.decode(payload) as Map<String, dynamic>;
+      print(map);
       dbInsert(json.decode(payload));
-      return Response.ok(json.decode(payload));
+      return Response.ok(map);
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
