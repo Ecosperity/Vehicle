@@ -23,7 +23,8 @@ class RiderApi {
     router.get('/driver', (Request request) async {
       Db databases = await database();
       final col = databases.collection('riders');
-      final mapJson = jsonEncode(col.find().toList());
+      final list = await col.find().toList();
+      final mapJson = jsonEncode(list);
       return Response.ok(mapJson);
     });
 
