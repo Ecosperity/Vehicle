@@ -23,7 +23,7 @@ class RiderApi {
   Future<void> dbInsert(Map<String, String> data) async {
     Db databases = await database();
     final col = databases.collection('riders');
-    col.insert(data);
+    col.insertOne(data);
   }
 
   Future<List<Map<String, dynamic>>> dbGet() async {
