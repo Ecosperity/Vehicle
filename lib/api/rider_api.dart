@@ -41,12 +41,13 @@ class RiderApi {
     });
 
     router.post('/driver', (Request request) async {
-      final payload = await request.readAsString();
-      final jsonMap = json.decode(payload);
-      print(jsonMap["name"]);
-      data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
+      // final payload = await request.readAsString();
+      // final jsonMap = json.decode(payload);
+      // print(jsonMap["name"]);
+      // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
+      data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
       dbInsert(data);
-      return Response.ok(jsonMap);
+      return Response.ok(data);
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
