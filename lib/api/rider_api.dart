@@ -39,13 +39,15 @@ class RiderApi {
     });
 
     router.post('/driver', (Request request) async {
-      // final payload = await request.readAsString();
-      // final jsonMap = json.decode(payload);
-      // print(jsonMap["name"]);
+      final payload = await request.readAsString();
+      final jsonMap = json.decode(payload);
+      print(jsonMap);
       // data = {"login": jsonMap["login"].toString(), "name": jsonMap["name"].toString(), "email": jsonMap["email"].toString()};
       // data = {"login": "doe", "name": "John Doe", "email": "john@doe.com"};
-      dbInsert();
-      return Response.ok("Done");
+      Db databases = await database();
+      final col = databases.collection('riders');
+      await col.insertOne(jsonMap);
+      return Response.ok(jsonMap.toString());
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
