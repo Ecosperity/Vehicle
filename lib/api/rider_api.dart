@@ -58,10 +58,10 @@ class RiderApi {
 
     router.post('/driver', (Request request) async {
       final payload = await request.readAsString();
-      Map<String, String> map = json.decode(payload);
-      print(map);
-      dbInsert(map);
-      return Response.ok(map);
+      // Map<String, String> map = json.decode(payload);
+      // print(map);
+      dbInsert(json.decode(payload));
+      return Response.ok(json.decode(payload));
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
