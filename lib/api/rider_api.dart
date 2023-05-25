@@ -57,9 +57,9 @@ class RiderApi {
     });
 
     router.post('/driver', (Request request) async {
-      final payload = await request.headers;
-      final jsonMap = json.decode(payload.toString());
-      print(jsonMap);
+      final payload = await request.readAsString();
+      final jsonMap = json.decode(payload);
+      print(jsonMap["name"]);
       dbInsert(jsonMap);
       return Response.ok(jsonMap);
     });
