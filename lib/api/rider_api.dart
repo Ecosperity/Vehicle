@@ -36,7 +36,7 @@ class RiderApi {
     return db;
   }
 
-  Future<void> dbInsert(Map<String, dynamic> map) async {
+  Future<void> dbInsert(map) async {
     Db databases = await database();
     final col = databases.collection('riders');
     col.insert(map);
@@ -60,7 +60,7 @@ class RiderApi {
       final payload = await request.readAsString();
       final jsonMap = json.decode(payload);
       print(jsonMap);
-      Map<String, dynamic> map = jsonMap.map((dynamic e) => e as Map<String, dynamic>);
+      final map = jsonMap.map((dynamic e) => e as Map<String, dynamic>);
       dbInsert(map);
       return Response.ok(map);
     });
