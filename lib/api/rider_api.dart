@@ -27,7 +27,7 @@ class RiderApi {
       final list = await col.find().toList();
       var mapJson = jsonEncode(list);
       if (query!.isNotEmpty) {
-        final filteredList = await col.find(where.eq('name', query));
+        final filteredList = await col.find(where.eq('name', query)).toList();
         mapJson = jsonEncode(filteredList);
       }
       return Response.ok(mapJson, headers: {'Content-Type': 'application/json'});
