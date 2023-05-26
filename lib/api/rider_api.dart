@@ -21,11 +21,12 @@ class RiderApi {
     final router = Router();
 
     router.get('/driver', (Request request) async {
+      print(request.url.queryParameters["query"]);
       Db databases = await database();
       final col = databases.collection('riders');
       final list = await col.find().toList();
       final mapJson = jsonEncode(list);
-      return Response.ok(mapJson);
+      return Response.ok(mapJson, headers: {'Content-Type': 'application/json'});
     });
 
     router.post('/driver', (Request request) async {
@@ -52,7 +53,7 @@ class RiderApi {
       final col = databases.collection('riders');
       print(jsonMap["email"]);
       col.update(where.eq("login", name), modify.set(param, jsonMap[param]));
-      return Response.ok("Updated $name");
+      return Response.ok("Updated $param of $name");
     });
 
     router.all('/<ignored|.*>', (Request request) => Response.notFound('null'));
