@@ -6,9 +6,8 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 class RiderApi {
-  // final favoriteJson = jsonEncode(Favorite('one', 'two'));
-
   // final List data = json.decode(File('data.json').readAsStringSync());
+  String response = "";
 
   Future<Db> database() async {
     final db = await Db.create(
@@ -30,7 +29,8 @@ class RiderApi {
         final filteredList = await col.find(where.eq('name', query)).toList();
         mapJson = jsonEncode(filteredList);
       }
-      return Response.ok(mapJson, headers: {'Content-Type': 'application/json'});
+      return Response.ok(mapJson,
+          headers: {'Content-Type': 'application/json'});
     });
 
     router.post('/driver', (Request request) async {
@@ -50,13 +50,19 @@ class RiderApi {
       return Response.ok("Deleted $name");
     });
 
-    router.patch('/driver/<name>/<param>', (Request request, String name, String param) async {
+    router.patch('/driver/<name>', (Request request, String name) async {
+      String? param = request.url.queryParameters["param"];
       final payload = await request.readAsString();
       final jsonMap = json.decode(payload);
       Db databases = await database();
       final col = databases.collection('riders');
-      print(jsonMap["email"]);
-      col.update(where.eq("login", name), modify.set(param, jsonMap[param]));
+      if (param != null) {
+        col.update(where.eq("login", name), modify.set(param, jsonMap[param]));
+        response = "Updated $param of $name";
+      }
+      else {
+        response = "Unknown query.";
+      }
       return Response.ok("Updated $param of $name");
     });
 
