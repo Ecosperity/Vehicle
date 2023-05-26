@@ -45,13 +45,13 @@ class RiderApi {
       return Response.ok("Deleted $name");
     });
 
-    router.patch('/driver/<name>', (Request request, String name) async {
+    router.patch('/driver/<name>/<param>', (Request request, String name, String param) async {
       final payload = await request.readAsString();
       final jsonMap = json.decode(payload);
       Db databases = await database();
       final col = databases.collection('riders');
       print(jsonMap["email"]);
-      col.update(where.eq("login", name), modify.set("email", jsonMap["email"]));
+      col.update(where.eq("login", name), modify.set(param, jsonMap[param]));
       return Response.ok("Updated $name");
     });
 
