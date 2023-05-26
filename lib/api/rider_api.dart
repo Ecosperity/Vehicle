@@ -21,11 +21,15 @@ class RiderApi {
     final router = Router();
 
     router.get('/driver', (Request request) async {
-      print(request.url.queryParameters["query"]);
+      String? query = request.url.queryParameters["query"];
       Db databases = await database();
       final col = databases.collection('riders');
       final list = await col.find().toList();
-      final mapJson = jsonEncode(list);
+      var mapJson = jsonEncode(list);
+      if (query!.isNotEmpty) {
+        final filteredList = await col.find(where.eq('name', query));
+        mapJson = jsonEncode(filteredList);
+      }
       return Response.ok(mapJson, headers: {'Content-Type': 'application/json'});
     });
 
