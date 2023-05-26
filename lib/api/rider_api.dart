@@ -50,7 +50,7 @@ class RiderApi {
       final jsonMap = json.decode(payload);
       Db databases = await database();
       final col = databases.collection('riders');
-      col.updateOne(where.eq('name', name), modify.set(jsonMap[0][0], jsonMap[0][1]));
+      col.updateOne(where.eq('name', name), modify.set("email", jsonMap["email"]));
       return Response.ok("Updated $name");
     });
 
