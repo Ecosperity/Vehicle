@@ -38,7 +38,7 @@ class RiderApi {
       final jsonMap = json.decode(payload);
       Db databases = await database();
       final col = databases.collection('riders');
-      await col.insertOne(jsonMap);
+      await col.insert(jsonMap);
       return Response.ok(jsonMap.toString());
     });
 

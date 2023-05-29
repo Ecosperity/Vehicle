@@ -17,3 +17,4 @@ dependencies:
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
   mongo_dart: ^0.9.1
+  shelf_web_socket: ^1.0.4
