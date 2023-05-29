@@ -27,11 +27,13 @@ void main(List<String> arguments) async {
   app.mount('/api/', RiderApi().router);
 
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
-  var server = await shelf_io.serve(handler, ip, port);
+  var server = await shelf_io.serve(handler, ip, port, shared: true);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 
 /**************************************************************/
+
+  final wsPort = int.parse('8000');
 
   Handler _wsHandler = webSocketHandler((webSocket) {
     webSocket.stream.listen((message) {
@@ -41,6 +43,6 @@ void main(List<String> arguments) async {
 
   final _router = Router()..get('/api/v1/users/ws', _wsHandler);
   final wsHandler = Pipeline().addMiddleware(logRequests()).addHandler(_router);
-  final wsServer = await serve(wsHandler, ip, port, shared: true);
+  final wsServer = await serve(wsHandler, ip, wsPort, shared: true);
   print('Server listening on port ${wsServer.port}');
 }
