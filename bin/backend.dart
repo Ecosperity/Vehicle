@@ -27,7 +27,7 @@ void main(List<String> arguments) async {
   app.mount('/api/', RiderApi().router);
 
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
-  var server = await shelf_io.serve(handler, ip, port);
+  var server = await shelf_io.serve(handler, ip, port, shared: true);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 
@@ -49,6 +49,6 @@ void main(List<String> arguments) async {
   // For running in containers, we respect the PORT environment variable.
   final wsPort = int.parse(Platform.environment['PORT'] ?? '8080');
 
-  final wsServer = await serve(wsHandler, wsIp, wsPort);
+  final wsServer = await serve(wsHandler, wsIp, wsPort, shared: true);
   print('Server listening on port ${wsServer.port}');
 }
