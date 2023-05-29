@@ -42,13 +42,13 @@ void main(List<String> arguments) async {
   // Configure routes.
   final _router = Router()..get('/api/v1/users/ws', _wsHandler);
 
-  final wsIp = InternetAddress.anyIPv4;
+  // final wsIp = InternetAddress.anyIPv4;
 // Configure a pipeline that logs requests.
   final wsHandler = Pipeline().addMiddleware(logRequests()).addHandler(_router);
 
   // For running in containers, we respect the PORT environment variable.
-  final wsPort = int.parse(Platform.environment['PORT'] ?? '8080');
+  // final wsPort = int.parse(Platform.environment['PORT'] ?? '8080');
 
-  final wsServer = await serve(wsHandler, wsIp, wsPort, shared: true);
+  final wsServer = await serve(wsHandler, ip, port, shared: true);
   print('Server listening on port ${wsServer.port}');
 }
