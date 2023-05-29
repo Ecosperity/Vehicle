@@ -39,6 +39,6 @@ void main(List<String> arguments) async {
   print('Serving at http://${server.address.host}:${server.port}');
 
   shelf_io.serve(wsHandler, ip, port).then((server) {
-    print('Serving at ws://${server.address.host}:${server.port}');
+    print('Serving at ws://${server.address.host}:${8081}');
   });
 }
