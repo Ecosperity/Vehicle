@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:backend/api/rider_api.dart';
 import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart';
-import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 void main(List<String> arguments) async {
   final ip = InternetAddress.anyIPv4;
@@ -30,19 +28,4 @@ void main(List<String> arguments) async {
   var server = await shelf_io.serve(handler, ip, port, shared: true);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
-
-/**************************************************************/
-
-  final wsPort = int.parse('8000');
-
-  Handler _wsHandler = webSocketHandler((webSocket) {
-    webSocket.stream.listen((message) {
-      webSocket.sink.add("echo $message");
-    });
-  });
-
-  final _router = Router()..get('/api/v1/users/ws', _wsHandler);
-  final wsHandler = Pipeline().addMiddleware(logRequests()).addHandler(_router);
-  final wsServer = await serve(wsHandler, ip, wsPort, shared: true);
-  print('Server listening on port ${wsServer.port}');
 }

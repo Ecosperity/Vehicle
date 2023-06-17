@@ -11,7 +11,7 @@ class RiderApi {
 
   Future<Db> database() async {
     final db = await Db.create(
-        'mongodb+srv://doadmin:L09xk278KUm156Np@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
+        'mongodb+srv://doadmin:wu3C5Y70p49Rey21@eml-database-6c1feb38.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=eml-database');
     await db.open();
     return db;
   }
