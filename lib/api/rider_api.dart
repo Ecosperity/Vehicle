@@ -44,9 +44,17 @@ class RiderApi {
 
     router.delete('/driver/<name>', (Request request, String name) async {
       // final parsedName = int.tryParse(name);
+      String? param = request.url.queryParameters["param"];
       Db databases = await database();
       final col = databases.collection('riders');
-      await col.deleteOne({"login": name});
+
+      if (param == 'all') {
+        await col.deleteMany({"login": name});
+      }
+      else {
+        await col.deleteOne({"login": name});
+      }
+
       return Response.ok("Deleted $name");
     });
 
